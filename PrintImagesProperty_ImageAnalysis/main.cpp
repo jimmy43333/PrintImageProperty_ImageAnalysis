@@ -16,7 +16,18 @@
 using namespace std;
 using namespace cv;
 
+void permutation(const Mat& a,int *p,int size){
+    int i,j;
+    for(i=0;i<size;i++){
+        for(j=0;j<size;j++){
+            *(p+i*512+j)=a.at<uchar>(size-1-i,size-1-j);
+        }
+    }
+}
+
 int main(int argc, const char * argv[]) {
+    
+    /*
     Mat input = imread("/Users/TGsung/Desktop/mini.jpg",1);
     for(int i=0;i< input.rows;i++){
         for(int j=0;j<input.cols;j++){
@@ -28,6 +39,8 @@ int main(int argc, const char * argv[]) {
     namedWindow("Display window", WINDOW_AUTOSIZE);
     imshow("Display window", input);
     waitKey(0);
+    */
+    
     /*
     Mat face = readRawfile("/Users/TGsung/Desktop/Dataset/880372.raw", 128, 128);
     imwrite("/Users/TGsung/Desktop/face1.jpg",face);
@@ -53,5 +66,25 @@ int main(int argc, const char * argv[]) {
     RGBHistogram("/Users/TGsung/Desktop/Dataset/SleepingDog.jpg", "/Users/TGsung/Desktop/S.jpg");
     RGBHistogram("/Users/TGsung/Desktop/Dataset/Daibutsu.jpg", "/Users/TGsung/Desktop/D.jpg");
     */
+    Mat image1 = readRawfile("/Users/TGsung/Desktop/Frac2018/lenna.raw", 512, 512);
+    //Mat image2 = readRawfile("/Users/TGsung/Downloads/Frac2018/output000.raw", 512, 512);
+    //Mat image3 = imread("/Users/TGsung/Downloads/Frac2018/04.png",1);
+    int Domain[512][512];
+    Mat output;
+    output.create(512,512,CV_8U);
+    permutation(image1,&Domain[0][0],512);
+    int i,j;
+    for(i=0;i<512;i++){
+        for(j=0;j<512;j++){
+            output.at<uchar>(i,j) = Domain[i][j];
+        }
+    }
+    
+    namedWindow("D", WINDOW_AUTOSIZE);
+    imshow("D",output);
+    imshow("A",image1);
+    //double psnr = calpsnr(image1, image2);
+    //cout << psnr;
+    waitKey(0);
     return 0;
 }

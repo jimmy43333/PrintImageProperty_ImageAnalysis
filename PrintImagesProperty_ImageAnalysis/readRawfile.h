@@ -37,6 +37,23 @@ Mat readRawfile(const char* filename,int width,int height){
     return outputimage;
 }
 
-
+//Calculate psnr
+double calpsnr(Mat& original, Mat& compress){
+    double psnr = 0;
+    double mse = 0 ;
+    int tmp = 0;
+    if(original.size() != compress.size()){
+        return 0;
+    }
+    for(int i =0;i<original.rows;i++){
+        for(int j = 0;j<original.cols;j++){
+            tmp = original.at<uchar>(i,j) - compress.at<uchar>(i,j);
+            mse += ( tmp * tmp );
+        }
+    }
+    mse = mse/(original.rows * original.cols);
+    psnr = 10 * log10((255*255)/mse);
+    return psnr;
+}
 #endif /* readRawfile_h */
 

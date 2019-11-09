@@ -1,9 +1,9 @@
-== PrintImagesProperty == 
+=== PrintImagesProperty === 
 
-##Introduction  
+## Introduction  
 This is the file that includes some images analysis function.  
 
-##Header file  
+## Header file  
 + CulculateCDF.h  
 vector<int> CulculateCDF(Mat& input,int range,const String& outputname)  
 return the cdf of images.  
